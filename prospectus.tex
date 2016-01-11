@@ -1,0 +1,447 @@
+%% prospectus.tex - dissertation prospectus
+%%
+%% Copyright 2016 Jeffrey Finkelstein <jeffrey.finkelstein@gmail.com>.
+%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% This must come before hyperref.
+\usepackage{amsthm}
+%% This is strongly recommended by biblatex.
+\usepackage[english]{babel}
+\usepackage[backend=biber]{biblatex}
+\usepackage[T1]{fontenc}
+%% This must come before csquotes.
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%% This is strongly recommended by biblatex.
+\usepackage{csquotes}
+%% This must come before hyperref.
+\usepackage{thmtools}
+%% This must come before complexity.
+\usepackage{hyperref}
+\usepackage{complexity}
+\usepackage[firstpage]{draftwatermark}
+\usepackage{microtype}
+\usepackage{textcomp}
+\usepackage{enumitem}
+
+%% Set the amount by which certain characters protrude into the margins.
+%%
+%% \LoadMicrotypeFile{cmr}
+%%
+%%     This command forces the built-in protrusion settings for the Computer
+%%     Modern Roman (cmr) font family to become available at this point, so
+%%     that we can override these settings on the next line. Even though we are
+%%     really using the Latin Modern Roman (lmr) fonts, microtype uses the cmr
+%%     configuration file.
+%%
+%% \SetProtrusion
+%%
+%%     This instructs the microtype package that we are going to modify the
+%%     protrusion settings.
+%%
+%% [load=lmr-T1]
+%%
+%%     Loads the Type 1 (T1) encoding of the lmr font family, thereby setting
+%%     the default protrusion values for all the characters. This is only
+%%     possible after the \LoadMicrotypeFile{cmr} command (microtype
+%%     essentially considers lmr to be an alias for cmr).
+%%
+%% {encoding=T1, family=lmr}
+%%
+%%     Indicates that we are going to modify the protrusion values for the T1
+%%     encoding of the lmr font family.
+%%
+%% \textquotedblright = {,1000} (and similar commands)
+%%
+%%     Force the character given by \textquotedblright to have default
+%%     protrusion on the left margin (given by an empty string before the
+%%     comma) and full protrusion (that is, protrusion value 1000) on the right
+%%     margin.
+\LoadMicrotypeFile{cmr}
+\SetProtrusion
+    [load=lmr-T1]
+    {encoding=T1, family=lmr}
+    {
+      \textquotedblright = {,1000},
+      \textquotedblleft = {1000,},
+      {'} = {,1000},
+      {,} = {,1000},
+      {:} = {,1000},
+      {;} = {,1000},
+      {.} = {,1000}
+    }
+
+%% Set the ``work-in-progress'' watermark for the first page.
+\SetWatermarkLightness{0.9}
+\SetWatermarkText{Work-in-progress}
+\SetWatermarkFontSize{3.5cm}
+
+%% Set the title and author of the PDF file.
+\hypersetup{pdftitle={Parallelism, nondeterminism, and algebraic computation}, pdfauthor={Jeffrey Finkelstein}}
+
+%% Declare the bibliography file.
+\addbibresource{prospectus.bib}
+
+%% Declare theorem-like environments.
+\declaretheorem[numberwithin=section]{theorem}
+
+%% Custom commands are declared here.
+\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
+\newcommand{\todo}[1]{\textbf{TODO #1}}
+
+%% Redefine the footnote environment so it has no reference and no number.
+\long\def\symbolfootnote#1{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup}
+
+%% Define the author, title, and date for the document.
+\author{Jeffrey~Finkelstein\\ Computer Science Department, Boston University}
+\title{Parallelism, nondeterminism, and algebra \\ \Large{Dissertation prospectus}}
+
+\begin{document}
+
+\maketitle
+
+\symbolfootnote{%
+  Copyright 2016 Jeffrey~Finkelstein \email{jeffreyf@bu.edu}.
+
+  This document is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License, which is available at \mbox{\url{https://creativecommons.org/licenses/by-sa/4.0/}}.
+  The \LaTeX{} markup that generated this document can be downloaded from its website at \mbox{\url{https://github.com/jfinkels/prospectus}}.
+  The markup is distributed under the same license.
+}
+
+\section{Introduction}
+
+\todo{Global introduction here}
+
+% Foreword
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+
+%%% relevant existing work, given as part of the need
+
+% task (focus on author) why me? - what was undertaken to address the need
+
+% object (focus on document) why this document - what the document covers
+
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+
+% perspective (focus on anyone) what now? - what should be done next
+
+
+\section{Parallelism}
+%% INTRODUCTION - the ``why''?
+
+Since parallel computing is again becoming a topic of interest in computer science (partially due to the recent popularity of multicore processors in mobile computing devices in the developed world), it is important to revisit the theoretical foundations of highly parallel computing.
+``Inherently sequential'' computational problems see no speedup when run on highly parallel computers.
+Just as there are efficient approximations for intractable optimization problems, so too are there highly parallel approximations for inherently sequential optimization problems.
+For example, the problem of computing the optimal vector in a positive linear program, a problem relevant to distributed flow control within a network of routers, is inherently sequential, but a vector very close to the optimal one can be computed quickly by a highly parallel computer.
+I intend to provide results demonstrating the structural complexity of highly parallel approximations for inherently sequential problems.
+This area has not been well-studied, and when it has been studied, the results focus mostly on highly parallel approximations for intractable optimization problems (that is, $\NC$ approximations for $\NP$-hard problems), not highly parallel approximations for tractable but inherently sequential problems (that is, $\NC$ approximations for $\P$-hard problems).
+
+%% SUMMARY - the ``so what''?
+
+First, we have shown that for optimization problems, the complexity of the verification procedure matters.
+Specifically, for some problems, verifying a solution is an inherently sequential problem, whereas for others, verification can be done in parallel.
+This allows us to define a hierarchy of complexity classes consisting of optimization problems that can be approximated in parallel.
+This hierarchy exists between $\NC$ and $\NP$ (circumventing $\P$).
+We show that this hierarchy (as well as the one resulting from its intersection with $\P$) is likely strict.
+%% As stated in the previous paragraph, one of our goals is to explore the relationship between optimization problems for which computing an exact solution is an inherently sequential problem and those that permit a highly parallel approximation.
+
+Second, we show that \textsc{Linear Programming} is complete for the class of maximization problems that can be solved exactly in polynomial time, thus providing an explanation as to why any highly parallel approximation for \textsc{Linear Programming} implies $\NC = \P$ (a fact known by the year 1991).
+In contrast, there are inherently sequential problems that admit highly parallel constant-factor approximations up to a certain fixed threshold, as well as those that admit highly parallel approximation schemes.
+We hope to show that one of the constant-factor approximable problems is complete for the class of all such problems, but we have not been able to do so.
+
+
+%% % Foreword
+
+%% % context (focus on anyone) why now? - current situation, and why the need is so important
+%% The growth of multiprocessor systems in general purpose personal computers highlights the urgency of proving the inapproximability (or approximability) of \emph{inherently sequential} optimization problems by \emph{efficient and highly parallel} algorithms, analagous to the inapproximability of intractable optimization problems by efficient algorithms.
+%% The $\P$-complete problems are generally considered to be inherently sequential, whereas problems in $\NC$ are considered highly parallel.
+%% Our guiding question is now, ``For which $\P$-complete problems are there $\NC$ approximation algorithms, and for which are there none?''
+
+%% % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+%% \todo{one sentence here for the ``need''.}
+%% %%% relevant existing work, given as part of the need
+%% % task (focus on author) why me? - what was undertaken to address the need
+%% Our goal is to provide the theoretical foundations of efficient and highly parallel approximation algorithms to efficient but inherently sequential problems.
+%% % object (focus on document) why this document - what the document covers
+%% This section provides some preliminary definitions and basic theorems for a framework that allows us to study such algorithms.
+
+%% % Summary
+%% %
+%% % findings (focus on author) what? - what the work revealed when performing the task
+%% We adapt the definitions of classic complexity classes in order to capture the notion of ``solvable sequentially in no better than polynomial time, but approximately solvable by a parallel algorithm''.
+%% Furthermore, we adapt the definitions of probabilistically checkable proof systems to highly parallel verifiers as a first step to proving hardness of highly parallel approximation for sequential problems.
+%% % conclusion (focus on readers) so what? - what the findings mean for the audience
+%% This work paves the way for future analysis of sequential problems, which will become increasingly important as parallelizable processes continue to grow in scope and significance.
+%% % perspective (focus on anyone) what now? - what should be done next
+%% It allow us, in the future, to additionally prove some lower bounds on the approximability for some problems introduced in this section, to complement the given upper bounds.
+
+\subsection{Work done}
+
+\subsubsection{Inherently sequential algorithms}
+
+Let's first consider a particular example of an inherently sequential problem.
+The free group rank problem is defined as follows: given a finite alphabet $S$, a finite set $U$ of freely reduced words over $S \cup S^{-1}$, and a positive integer $k$, determine the rank of the free subgroup generated by $U$.
+This problem can be solved in polynomial time via an algorithm known as the Nielsen reduction, but can be solved more simply by transforming the set of generators into a graph, then running an algorithm known as Stallings' folding process.
+The free group rank problem is $\P$-complete, so Stallings' folding process is as well.
+For more information, see \autocite{stallings}.
+
+\subsubsection{Highly parallel approximations}
+
+%% The abundance of models for parallel computation reveal the significance of determining the tradeoff in time and parallelism (see \url{http://cs-people.bu.edu/jeffreyf/#parallel}).
+%% Shared memory models, queuing delays, hierarchical memory access, module-segregated memory all play a part in evaluating the effectiveness of a particular model of parallel computation for a particular application.
+
+Knowing that an optimization problem has no parallelizable exact solution is not wholly satisfying, since we know that some intractable problems have polynomial-time approximation schemes.
+We propose a new theoretical framework for studying efficient and highly parallel approximation algorithms for efficient but inherently sequential optimization problems; for more detailed information, see \autocite{ncapproximation}.
+We propose three new complexity classes, $\NNCO^*$, $\ApxNCO^*$, and $\NCAS^*$.
+The first is the class of optimization problems that admit a polynomial-time algorithm that outputs an optimal solution and whose instance set, solution relation, and measure function are all decidable (or computable, in the last case) by an $\NC$ circuit family.
+The second is the subset of $\NNCO^*$ in which the optimization problem admits an $\NC$-computable constant-factor approximation algorithm.
+The third is the subset of $\ApxNCO^*$ in which the optimization problem admits an $\NC$-computable approximation scheme.
+
+Using this framework, we can show a hierarchy theorem.
+Below, $\PO$ is the class of optimization problems for which there is a polynomial-time algorithm that outputs an optimal solution, and $\NCO$ is the same but for $\NC$ algorithms.
+
+\begin{theorem}[{\autocite[Theorem~3.25]{ncapproximation}}]
+  If $\NC \neq \P$, then
+  \begin{equation*}
+    \NCO \subsetneq \NCAS^* \subsetneq \ApxNCO^* \subsetneq \NNCO^* \subsetneq \PO.
+  \end{equation*}
+\end{theorem}
+
+Now what kind of optimization problems are in these classes?
+First, consider the maximum double circuit value problem: given two Boolean circuits $E$ and $M$ and an input $x$, find a string $y$ such that $E(x) = y$ and $M(x, y)$ is maximized.
+This problem is in $\PO$, since it involves evaluating a circuit, both to verify a solution and to evaluate the objective function, and in fact complete under logarithmic-space approximation-preserving reductions.
+Next, consider the linear programming problem: given an integer matrix $A$, and integer vectors $b$ and $c$, find a rational vector $x$ such that $c^T x$ is maximized.
+The linear programming problem is in $\NNCO^*$, since optimal solutions are computable in polynomial time, and the solution relation and measure function are computable by reduction to matrix multiplication, which is computable in $\NC$.
+
+Now we are faced with a dilemma: there is a logarithmic-space approximation-preserving reduction from the maximum double circuit value problem to the linear programming, proving that the linear programming problem is also complete for $\PO$.
+However, this tells us that $\NNCO^*$ is not closed under approximation-preserving reductions---evidence that the complexity of verification and the complexity of approximation are not closely related.
+In other words, there is more work to be done in establishing the complexity classes and reductions that take into account complexity of decision, verification, and approximation.
+\todo{This is a key point; reiterate it later and/or mention it in an introduction.}
+
+Moving down the hierarchy, we would like to provide a complete problem for $\ApxNCO^*$.
+In order to do this, we need either (1) an analog of the PCP theorem with $\NC$ verifiers for polynomial time decision problems, or (2) a canonical, ``universal'' complete problem for $\ApxNCO^*$.
+These seem to be the only two known ways for showing completeness in constant-factor approximation classes.
+The first approach is difficult to apply because it is not obvious how to construct a probabilistically checkable proof for a deterministic time complexity class like $\PO$; see \autoref{sec:ncpcp} below and \autocite{ncpcp} for more information on that approach.
+The second approach is difficult to apply because although this technique has worked in the past for constructing a complete problem for $\APX$ \autocite[Lemma~2]{cp91}, it is not clear how to guarantee a polynomial time computable function that produces optimal solutions for such a problem.
+
+We propose three candidate complete problems for $\ApxNCO^*$.
+Since we know the linear programming problem is not approximable by a parallel algorithm but \emph{positive} linear programming is in $\NCAS^*$ \autocite{ln93}, two of these candidates are compromises between the unrestricted form of linear programming and the highly restricted positive linear programming.
+\begin{itemize}
+\item
+  The maximum high degree subgraph problem.
+  Given an undirected graph, find a vertex-induced subgraph $H$ that maximizes $\deg(H)$, the minimum degree of any vertex in $H$.
+  This problem has threshold behavior for its parallel approximability \autocite{am84}, as we expect from a complete problem.
+\item
+  The linear programming for high degree subgraph problem.
+  This is the linear programming relaxation of the above combinatorial problem.
+\item
+  The linear programming with triplets problem.
+  Given a linear program with a certain specific form and an approximation guarantee on the objective function values, find a solution vector that maximizes the objective.
+\end{itemize}
+
+We currently do not know how to prove that any of these is complete for $\ApxNCO^*$.
+
+\subsection{Future work}
+
+\begin{description}[style=nextline]
+\item[Fixed parameter parallelizable problems \autocite{parallel}]
+  Compare with limited nondeterminism classes, as done in \autocite[Section~4.4]{fg06}.
+\item[Average-case parallelizable problems \autocite{parallel}]
+  Create a definition, using either circuits or PRAM.
+\item[Syntactic definition of $\ApxNCO^*$ \autocite{ncapproximation}]
+  We know $\FO[\polylog] = \NC$, can we use this?
+\item[Time-lock puzzles \autocite{timelock}]
+  Understanding parallel approximability and average-case parallelizability of inherently sequential problems can be help to construct time-lock puzzles.
+\item[Relating complexity of decision, verification, and approximation \autocite{limndver}]
+  As mentioned above, we have a tenuous understanding on the relationship among the complexity of decision, the complexity of verification, and the complexity of approximation for all computational problems, and specifically for inherently sequential ones.
+\end{description}
+
+\section{Nondeterminism}
+% Foreword
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+
+%%% relevant existing work, given as part of the need
+
+% task (focus on author) why me? - what was undertaken to address the need
+
+% object (focus on document) why this document - what the document covers
+
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+
+% perspective (focus on anyone) what now? - what should be done next
+
+As stated in the previous section, we would like to show that some problems are hard to approximate on parallel machines, and one way of doing that involves using an analog of the PCP Theorem, adapted for highly parallel verifiers.
+Unfortunately, the techniques used to prove the original PCP Theorem rely on the fact that $\NP$ can be interpreted as the class of languages for which there is an efficient verification procedure given a brief witness to language membership; no such obvious interpretation of $\P$ exists.
+Indeed, this question was already on the minds of researchers soon after the original proof of the PCP Theorem.
+\blockquote[{\autocite{trevisan98}}]{
+  An intriguing question is whether the known non-approximability results for sequential algorithms can be improved when we restrict to $\NC$ algorithms (under the assumption that $\P \neq \NC$).
+  A possible way may be to devise \emph{probabilistic proof systems for $\P$} more efficient that the currently known proof systems for $\NP$.
+  Such a result would have a great independent interest.
+  However, it is not clear why proofs for $\P$ should be \emph{easier to check} than proofs for $\NP$ (they only appear to be \emph{easier to generate}).
+}
+Perhaps $\P$ has proof systems which are easy to check in $\NC$, but this remains unclear.
+Instead, we consider proof systems for the class $\NNC(\polylog)$, the class of languages decidable by $\NC$ circuit families augmented with a polylogarithmic number of nondeterministic gates.
+We hope that this will be a valuable first step toward understanding proof systems for $\P$.
+We consider $\NNC(\polylog)$ for two reasons.
+First, it is defined in such a way that it explicitly has short proof systems which are easy to verify in parallel, just as $\NP$ is defined in such a way that it explicitly has short proof systems which are easy to verify efficiently.
+Second, it, like $\P$, lies between $\NC$ and $\NP$.
+
+Our study of $\NNC(\polylog)$ demonstrates that it is interesting in its own right.
+Many properties familiar from the study of nondeterministic polynomial time computation translate directly to $\NNC(\polylog)$, for example, the Valiant--Vazirani theorem \autocite{vv}.
+It also contains several very natural problems, including the problem of computing the rank of a finite group given as its Cayley table; other algebraic problems can be solved with limited nondeterminism, given such an explicit representation of the algebraic structure.
+Of particular interest are the algebraic common in cryptographic primitives: the discrete logarithm problem, the RSA problem, modular exponentiation, etc.
+We have yet to determine whether these can be computed with limited nondeterminism; see also \autocite{timelock}.
+
+Although our original intention was to show a result like $\NNC(\polylog) = \PCP[O(\log \log n), O(1)]$, our research reveals that proving such an equality is equivalent to proving $\NNC(\polylog) = \NC$, or in other words, that a polylogarithmic amount of nondeterminism can be simulated deterministically by an $\NC$ circuit family.
+This should be seen as evidence that such a result is unlikely; in fact, we show that such a simulation implies a deterministic subexponential time algorithm for \textsc{Satisfiability}!
+We are still, however, able to show that certain PCP classes are contained in $\NNC(\polylog)$.
+
+One strategy that failed to be fruitful was using tradeoffs in size, depth, and alternation in circuits to prove lower bounds for problems decidable with limited nondeterminism \autocite{sizedepth}.
+
+%% Third, we attempt to produce a probabilistically checkable proof characterization for \P{} in order to yield inapproximability results (in the sense of ``no approximation by highly parallel computer'') similar to those from the realm of \P{} and \NP.
+%% Since there is no obvious characterization of \P{} as a proof system, we use the nearby (but probably incomparable) complexity class of languages decidable by a highly parallel machine augmented with a polylogarithmic amount of nondeterministic bits.
+%% We can provide a PCP characterization of this complexity class, but we are not quite able to provide inapproximability results (we need to find an optimization problem that meets some requirements, but few potential optimization problems are known).
+%% As part of this avenue of research, we also show that the original PCP Theorem holds even if the verifier is restricted to be an \NC{} machine.
+
+\subsection{Work done}
+
+\subsubsection{Limited nondeterminism algorithms}
+
+Let's first consider a particular example of a problem that can be decided with limited nondeterminism, or equivalently, a problem for which any solution is short and verification is efficient.
+The Cayley group rank problem is defined as follows: given the Cayley table of a group $G$ of order $n$, compute the rank of the group.
+Since finite groups have generating sets of cardinality $\log n$, this problem can be solved by the following simple algorithm: nondeterministically choose a set of at most $\log n$ elements of $G$, check if that set generates the group, and if so, output the cardinality of the set.
+Since each element of a set of cardinality $n$ can be represented with $O(\log n)$ bits, the total number of nondeterministically chosen bits is $O(\log^2 n)$.
+Verifying that a set generates a group can be done with a small circuit, so this problem is in $\NNC(\log^2 n)$.
+For more information, see \autocite{grouprank}.
+
+\subsubsection{Probabilistically-checkable proofs}
+\label{sec:ncpcp}
+
+We are able to prove that the following inclusion chains are equivalent in the sense that the corresponding complexity classes in the two chains are equal,
+\begin{equation*}
+  \NC \subseteq \NNC(\polylog) \subseteq \NP
+\end{equation*}
+and
+\begin{equation*}
+  \PCP[O(\log \log n), O(1)] \subseteq \PCP[O(\log \log n), \polylog] \subseteq \PCP[O(\log n), O(1)],
+\end{equation*}
+where the PCP verifier is an $\NC$ machine.
+This equivalence allows us to show that certain tradeoffs in the two PCP parameters are unlikely.
+\begin{theorem}[{\autocite[Corollary~3.6]{ncpcp}}]
+  \mbox{}
+  \begin{enumerate}
+  \item If $\PCP^\NC[O(\log \log n), O(1)] = \PCP^\NC[O(\log \log n), \polylog]$, then $\NP \subseteq \SUBEXP$.
+  \item If $\PCP^\NC[O(\log \log n), \polylog] = \PCP^\NC[O(\log n), O(1)]$, then $\NP \subseteq \QP$.
+  \end{enumerate}
+\end{theorem}
+
+The first part of this corollary provides evidence that for certain classes of computational problems, an $\NC$ PCP verifier cannot reduce the number of necessary queries.
+The second part provides evidence that for certain classes of computational problems, a verifier cannot reduce randomness in exchange for an increase in the number of necessary queries.
+
+But our real goal is to determine a PCP characterization of $\P$.
+The classes $\P$ and $\NNC(\polylog)$ are conjectured incomparable \autocite{wolf94}.
+Using the results above, this conjecture implies that $\P$ and $\PCP^\NC[O(\log \log n), \polylog]$ are incomparable.
+\autoref{thm:pinpcp} shows consequences of a PCP characterization for $\P$.
+
+\begin{theorem}\label{thm:pinpcp}
+  \mbox{}
+  \begin{enumerate}
+  \item If $\P \subseteq \PCP^\NC[O(\log \log n), \polylog]$ then $\P \subsetneq \polyL$.
+  \item If $\polyL \subsetneq \P$ then $\PCP^\NC[O(\log \log n), \polylog] \subsetneq \P$.
+  \end{enumerate}
+\end{theorem}
+Although $\P \neq \polyL$ (since the former has a complete problem under logarithmic space many-one reductions while the latter does not), whether one is a strict subset of the other remains unknown.
+The two are conjectured to be incomparable \autocite[Section~2.5.1]{johnson90}, and this makes sense.
+If $\P \subsetneq \polyL$, then $\P \subsetneq \QP$ (by exhaustive search over the quasipolynomial number of configurations of the $\polyL$ machine) and $\P \subsetneq \PSPACE$ by the space hierarchy theorem, which would resolve a major open problem in computational complexity theory.
+If $\polyL \subsetneq \P$, then $\L \subsetneq \L^2 \subsetneq \dotsb \subsetneq \polyL \subsetneq \P$, another longstanding open problem.
+
+\subsection{Future work}
+
+\begin{description}[style=nextline]
+\item[Reductions respecting verification complexity \autocite{limndver}]
+  As mentioned in previous sections, the complexity of deciding a problem, verifying a solution to the problem, and approximating a problem have no relationship in general.
+  We would like to propose a framework for reductions that respect all three complexities, and specifically apply these to complexity classes involving limited nondeterminism.
+\item[Cryptographic primitives in limited nondeterminism \autocite{timelock}]
+  Which problems common in cryptography can be solved with limited nondeterminism.
+\end{description}
+
+\section{Algebraic computation}
+
+% Foreword
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+
+%%% relevant existing work, given as part of the need
+
+% task (focus on author) why me? - what was undertaken to address the need
+
+% object (focus on document) why this document - what the document covers
+
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+
+% perspective (focus on anyone) what now? - what should be done next
+
+\subsection{Work done}
+
+\begin{itemize}
+\item INCLUDED IN LIMND ABOVE: Computing rank of finite algebraic structures with limited nondeterminism
+\item INCLUDED IN PARSEQ ABOVE: Stallings' folding process is inherently sequential
+\item MENTION BUT DON'T INCLUDE: Time-lock puzzles
+\item SHOULD THIS BE INCLUDED? Polynomial-time kernel reductions
+\item MENTION THIS AS A RELATED PROBLEM: Finding a maximum linearly dependent set of vectors
+\end{itemize}
+
+\subsection{Future work}
+
+...
+
+%% Print the bibliography section here.
+\printbibliography
+
+\appendix
+
+\section{General computational complexity}
+
+\subsection{Work done}
+
+\begin{itemize}
+\item (ling) Complexity of parsing closed formulas
+\item (cc) Lower bounds for witness-finding algorithms
+\item (cc) Graph matching review
+\end{itemize}
+
+\subsection{Future work}
+
+...
+
+\end{document}

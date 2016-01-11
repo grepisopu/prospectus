@@ -1,3 +1,9 @@
+# Compiled document output:
+prospectus.pdf
+
+# emacs temporary files:
+*~
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
