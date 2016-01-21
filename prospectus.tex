@@ -83,7 +83,7 @@
 \SetWatermarkFontSize{3.5cm}
 
 %% Set the title and author of the PDF file.
-\hypersetup{pdftitle={Parallelism, nondeterminism, and algebraic computation}, pdfauthor={Jeffrey Finkelstein}}
+\hypersetup{pdftitle={Parallelism with nondeterminism}, pdfauthor={Jeffrey Finkelstein}}
 
 %% Declare the bibliography file.
 \addbibresource{prospectus.bib}
@@ -101,7 +101,7 @@
 
 %% Define the author, title, and date for the document.
 \author{Jeffrey~Finkelstein\\ Computer Science Department, Boston University}
-\title{Parallelism, nondeterminism, and algebra \\ \Large{Dissertation prospectus}}
+\title{Parallelism with limited nondeterminism \\ \Large{Dissertation prospectus}}
 
 \begin{document}
 
@@ -117,78 +117,85 @@
 
 \section{Introduction}
 
-\todo{Global introduction here}
-
 % Foreword
 
 % context (focus on anyone) why now? - current situation, and why the need is so important
-
+Since parallel computing is again becoming a topic of interest in computer science (partially due to the recent popularity of multicore processors in mobile computing devices in the developed world), it is important to revisit the theoretical foundations of highly parallel computing.
 % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
-
+``Inherently sequential'' computational problems see no speedup when run on highly parallel computers.
+Just as there are efficient approximations for intractable optimization problems, so too are there highly parallel approximations for inherently sequential optimization problems.
 %%% relevant existing work, given as part of the need
-
+For example, the problem of computing the optimal vector in a positive linear program, a problem relevant to distributed flow control within a network of routers, is inherently sequential, but a vector very close to the optimal one can be computed quickly by a highly parallel computer.
 % task (focus on author) why me? - what was undertaken to address the need
-
+I intend to develop the theory of structural complexity for efficient and highly parallel approximations for tractable but inherently sequential problems.
+This area has not been well-studied, and when it has been studied, the results focus mostly on highly parallel approximations for intractable optimization problems (that is, $\NC$ approximations for $\NP$-hard problems), not highly parallel approximations for tractable but inherently sequential problems (that is, $\NC$ approximations for $\P$-hard problems).
 % object (focus on document) why this document - what the document covers
-
+This prospectus describes work I have already completed and work that remains in developing this theory.
 
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
-
+The two sections below discuss the two main approaches to highly parallel approximations for inherently sequential algorithms.
+The first discusses the complexity classes associated with highly parallel approximation algorithms, the second discusses augmenting a highly parallel algorithm with a small amount of nondeterminism as a technique to prove approximability or inapproximability of inherently sequential problems.
 % conclusion (focus on readers) so what? - what the findings mean for the audience
-
+Together, these form the basis for proving approximability and inapproximability for tractable but inherently sequential problems by highly parallel algorithms.
 % perspective (focus on anyone) what now? - what should be done next
-
+This line of research, along with the fact that the complexity of solving a computational problem exactly seems to have little to with the approximability of that problem, emphasizes the need to further determine the relative difficulty of computational problems with respect to the complexity of decision, verification, and approximation.
 
 \section{Parallelism}
-%% INTRODUCTION - the ``why''?
+% % Foreword %
+%
+% %% Context (anyone - why now?) %%
+%
+% What is the current situation, and why is the need so important?
+%
+The $\NP$-complete problems are intractable, whereas problems in $\P$ are tractable.
+Similarly, the $\P$-complete problems are tractable but inherently sequential, whereas problems in $\NC$ are both tractable and parallelizable.
+% %% Need (readers - why you?) %%
+%
+% Why is this relevant to the reader, and why does something need to be done?
+% (Also reference relevant existing work.)
+%
+The theory of approximability of intractable problems does not provide any guarantees on parallelizability, and ignores the approximability of tractable but inherently sequential problems by highly parallel approximation algorithms.
+As parallel and distributed systems become more widespread, parallelizability of programs becomes more valuable.
+An important and widely used tractable optimization problem is the linear programming problem, which is solvable in polynomial time, but has no $\NC$ approximation algorithm unless $\NC = \P$.
+% %% Task (author - why me?) %%
+%
+% What was undertaken to address the need?
+%
+I propose translating the theory of polynomial-time approximation algorithms for $\NP$-complete optimization problems to the setting of highly parallel approximation algorithms for $\P$-complete optimization problems in order to classify and explain approximability and inapproximability by highly parallel algorithms for important problems like linear programming.
+% %% Object (document - why this document?) %%
+%
+% What does this document cover?
+%
+This section defines new complexity classes for optimization problems that are solvable exactly in polynomial time and approximable to various degrees by highly parallel algorithms, then proposes using these classifications to provide provable guarantees on approximability or inapproximability.
 
-Since parallel computing is again becoming a topic of interest in computer science (partially due to the recent popularity of multicore processors in mobile computing devices in the developed world), it is important to revisit the theoretical foundations of highly parallel computing.
-``Inherently sequential'' computational problems see no speedup when run on highly parallel computers.
-Just as there are efficient approximations for intractable optimization problems, so too are there highly parallel approximations for inherently sequential optimization problems.
-For example, the problem of computing the optimal vector in a positive linear program, a problem relevant to distributed flow control within a network of routers, is inherently sequential, but a vector very close to the optimal one can be computed quickly by a highly parallel computer.
-I intend to provide results demonstrating the structural complexity of highly parallel approximations for inherently sequential problems.
-This area has not been well-studied, and when it has been studied, the results focus mostly on highly parallel approximations for intractable optimization problems (that is, $\NC$ approximations for $\NP$-hard problems), not highly parallel approximations for tractable but inherently sequential problems (that is, $\NC$ approximations for $\P$-hard problems).
+% % Summary %
+%
+% %% Findings (author - what?)
+%
+% What did the work reveal when performing the task?
+%
+First, we show that for optimization problems, the complexity of the verification procedure matters.
+Specifically, for some problems, verifying a solution is an inherently sequential problem, whereas for others, verification can be done in parallel.
+This allows us to define a hierarchy of complexity classes between $\NCO$ and $\NPO$ consisting of optimization problems that can be approximated in parallel.
+We show that this hierarchy (as well as the one resulting from its intersection with $\P$) is likely strict.
+Second, we prove that the linear programming problem is complete for the class of maximization problems that can be solved exactly in polynomial time.
+This new classification for the problem explains why any highly parallel approximation for linear programming implies $\NC = \P$, a fact known since \oldstylenums{1991}.
+In contrast, not all efficient but inherently sequential problems are inapproximable: there are inherently sequential problems that admit highly parallel constant-factor approximations up to a certain fixed threshold, as well as those that admit ``fully parallel'' approximation schemes.
+
+% %% Conclusion (readers - so what?)
+%
+% What did the findings mean for the audience?
+%
+Together, these 
+% %% Perspective (anyone - what now?)
+%
+% What should be done next?
 
 %% SUMMARY - the ``so what''?
 
-First, we have shown that for optimization problems, the complexity of the verification procedure matters.
-Specifically, for some problems, verifying a solution is an inherently sequential problem, whereas for others, verification can be done in parallel.
-This allows us to define a hierarchy of complexity classes consisting of optimization problems that can be approximated in parallel.
-This hierarchy exists between $\NC$ and $\NP$ (circumventing $\P$).
-We show that this hierarchy (as well as the one resulting from its intersection with $\P$) is likely strict.
 %% As stated in the previous paragraph, one of our goals is to explore the relationship between optimization problems for which computing an exact solution is an inherently sequential problem and those that permit a highly parallel approximation.
-
-Second, we show that \textsc{Linear Programming} is complete for the class of maximization problems that can be solved exactly in polynomial time, thus providing an explanation as to why any highly parallel approximation for \textsc{Linear Programming} implies $\NC = \P$ (a fact known by the year 1991).
-In contrast, there are inherently sequential problems that admit highly parallel constant-factor approximations up to a certain fixed threshold, as well as those that admit highly parallel approximation schemes.
-We hope to show that one of the constant-factor approximable problems is complete for the class of all such problems, but we have not been able to do so.
-
-
-%% % Foreword
-
-%% % context (focus on anyone) why now? - current situation, and why the need is so important
-%% The growth of multiprocessor systems in general purpose personal computers highlights the urgency of proving the inapproximability (or approximability) of \emph{inherently sequential} optimization problems by \emph{efficient and highly parallel} algorithms, analagous to the inapproximability of intractable optimization problems by efficient algorithms.
-%% The $\P$-complete problems are generally considered to be inherently sequential, whereas problems in $\NC$ are considered highly parallel.
-%% Our guiding question is now, ``For which $\P$-complete problems are there $\NC$ approximation algorithms, and for which are there none?''
-
-%% % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
-%% \todo{one sentence here for the ``need''.}
-%% %%% relevant existing work, given as part of the need
-%% % task (focus on author) why me? - what was undertaken to address the need
-%% Our goal is to provide the theoretical foundations of efficient and highly parallel approximation algorithms to efficient but inherently sequential problems.
-%% % object (focus on document) why this document - what the document covers
-%% This section provides some preliminary definitions and basic theorems for a framework that allows us to study such algorithms.
-
-%% % Summary
-%% %
-%% % findings (focus on author) what? - what the work revealed when performing the task
-%% We adapt the definitions of classic complexity classes in order to capture the notion of ``solvable sequentially in no better than polynomial time, but approximately solvable by a parallel algorithm''.
-%% Furthermore, we adapt the definitions of probabilistically checkable proof systems to highly parallel verifiers as a first step to proving hardness of highly parallel approximation for sequential problems.
-%% % conclusion (focus on readers) so what? - what the findings mean for the audience
-%% This work paves the way for future analysis of sequential problems, which will become increasingly important as parallelizable processes continue to grow in scope and significance.
-%% % perspective (focus on anyone) what now? - what should be done next
-%% It allow us, in the future, to additionally prove some lower bounds on the approximability for some problems introduced in this section, to complement the given upper bounds.
 
 \subsection{Work done}
 
@@ -318,8 +325,7 @@ We have yet to determine whether these can be computed with limited nondetermini
 Although our original intention was to show a result like $\NNC(\polylog) = \PCP[O(\log \log n), O(1)]$, our research reveals that proving such an equality is equivalent to proving $\NNC(\polylog) = \NC$, or in other words, that a polylogarithmic amount of nondeterminism can be simulated deterministically by an $\NC$ circuit family.
 This should be seen as evidence that such a result is unlikely; in fact, we show that such a simulation implies a deterministic subexponential time algorithm for \textsc{Satisfiability}!
 We are still, however, able to show that certain PCP classes are contained in $\NNC(\polylog)$.
-
-One strategy that failed to be fruitful was using tradeoffs in size, depth, and alternation in circuits to prove lower bounds for problems decidable with limited nondeterminism \autocite{sizedepth}.
+%% One strategy that failed to be fruitful was using tradeoffs in size, depth, and alternation in circuits to prove lower bounds for problems decidable with limited nondeterminism \autocite{sizedepth}.
 
 %% Third, we attempt to produce a probabilistically checkable proof characterization for \P{} in order to yield inapproximability results (in the sense of ``no approximation by highly parallel computer'') similar to those from the realm of \P{} and \NP.
 %% Since there is no obvious characterization of \P{} as a proof system, we use the nearby (but probably incomparable) complexity class of languages decidable by a highly parallel machine augmented with a polylogarithmic amount of nondeterministic bits.
@@ -388,60 +394,39 @@ If $\polyL \subsetneq \P$, then $\L \subsetneq \L^2 \subsetneq \dotsb \subsetneq
   Which problems common in cryptography can be solved with limited nondeterminism.
 \end{description}
 
-\section{Algebraic computation}
+%% \section{Algebraic computation}
 
-% Foreword
+%% \subsection{Work done}
 
-% context (focus on anyone) why now? - current situation, and why the need is so important
+%% \begin{itemize}
+%% \item INCLUDED IN LIMND ABOVE: Computing rank of finite algebraic structures with limited nondeterminism
+%% \item INCLUDED IN PARSEQ ABOVE: Stallings' folding process is inherently sequential
+%% \item MENTION BUT DON'T INCLUDE: Time-lock puzzles
+%% \item SHOULD THIS BE INCLUDED? Polynomial-time kernel reductions
+%% \item MENTION THIS AS A RELATED PROBLEM: Finding a maximum linearly dependent set of vectors
+%% \end{itemize}
 
-% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+%% \subsection{Future work}
 
-%%% relevant existing work, given as part of the need
-
-% task (focus on author) why me? - what was undertaken to address the need
-
-% object (focus on document) why this document - what the document covers
-
-
-% Summary
-%
-% findings (focus on author) what? - what the work revealed when performing the task
-
-% conclusion (focus on readers) so what? - what the findings mean for the audience
-
-% perspective (focus on anyone) what now? - what should be done next
-
-\subsection{Work done}
-
-\begin{itemize}
-\item INCLUDED IN LIMND ABOVE: Computing rank of finite algebraic structures with limited nondeterminism
-\item INCLUDED IN PARSEQ ABOVE: Stallings' folding process is inherently sequential
-\item MENTION BUT DON'T INCLUDE: Time-lock puzzles
-\item SHOULD THIS BE INCLUDED? Polynomial-time kernel reductions
-\item MENTION THIS AS A RELATED PROBLEM: Finding a maximum linearly dependent set of vectors
-\end{itemize}
-
-\subsection{Future work}
-
-...
+%% ...
 
 %% Print the bibliography section here.
 \printbibliography
 
-\appendix
+%% \appendix
 
-\section{General computational complexity}
+%% \section{General computational complexity}
 
-\subsection{Work done}
+%% \subsection{Work done}
 
-\begin{itemize}
-\item (ling) Complexity of parsing closed formulas
-\item (cc) Lower bounds for witness-finding algorithms
-\item (cc) Graph matching review
-\end{itemize}
+%% \begin{itemize}
+%% \item (ling) Complexity of parsing closed formulas
+%% \item (cc) Lower bounds for witness-finding algorithms
+%% \item (cc) Graph matching review
+%% \end{itemize}
 
-\subsection{Future work}
+%% \subsection{Future work}
 
-...
+%% ...
 
 \end{document}
