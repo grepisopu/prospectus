@@ -127,10 +127,10 @@ Just as there are efficient approximations for intractable optimization problems
 %%% relevant existing work, given as part of the need
 For example, the problem of computing the optimal vector in a positive linear program, a problem relevant to distributed flow control within a network of routers, is inherently sequential, but a vector very close to the optimal one can be computed quickly by a highly parallel computer.
 % task (focus on author) why me? - what was undertaken to address the need
-I intend to develop the theory of structural complexity for efficient and highly parallel approximations for tractable but inherently sequential problems.
+We intend to develop the theory of structural complexity for efficient and highly parallel approximations for tractable but inherently sequential problems.
 This area has not been well-studied, and when it has been studied, the results focus mostly on highly parallel approximations for intractable optimization problems (that is, $\NC$ approximations for $\NP$-hard problems), not highly parallel approximations for tractable but inherently sequential problems (that is, $\NC$ approximations for $\P$-hard problems).
 % object (focus on document) why this document - what the document covers
-This prospectus describes work I have already completed and work that remains in developing this theory.
+This prospectus describes work we have already completed and work that remains in developing this theory.
 
 % Summary
 %
@@ -143,6 +143,7 @@ Together, these form the basis for proving approximability and inapproximability
 This line of research, along with the fact that the complexity of solving a computational problem exactly seems to have little to with the approximability of that problem, emphasizes the need to further determine the relative difficulty of computational problems with respect to the complexity of decision, verification, and approximation.
 
 \section{Parallelism}
+\label{sec:par}
 % % Foreword %
 %
 % %% Context (anyone - why now?) %%
@@ -163,7 +164,7 @@ An important and widely used tractable optimization problem is the linear progra
 %
 % What was undertaken to address the need?
 %
-I propose translating the theory of polynomial-time approximation algorithms for $\NP$-complete optimization problems to the setting of highly parallel approximation algorithms for $\P$-complete optimization problems in order to classify and explain approximability and inapproximability by highly parallel algorithms for important problems like linear programming.
+We propose translating the theory of polynomial-time approximation algorithms for $\NP$-complete optimization problems to the setting of highly parallel approximation algorithms for $\P$-complete optimization problems in order to classify and explain approximability and inapproximability by highly parallel algorithms for important problems like linear programming.
 % %% Object (document - why this document?) %%
 %
 % What does this document cover?
@@ -179,7 +180,7 @@ This section defines new complexity classes for optimization problems that are s
 First, we show that for optimization problems, the complexity of the verification procedure matters.
 Specifically, for some problems, verifying a solution is an inherently sequential problem, whereas for others, verification can be done in parallel.
 This allows us to define a hierarchy of complexity classes between $\NCO$ and $\NPO$ consisting of optimization problems that can be approximated in parallel.
-We show that this hierarchy (as well as the one resulting from its intersection with $\P$) is likely strict.
+We show that this hierarchy (as well as the one resulting from its intersection with $\PO$) is likely strict.
 Second, we prove that the linear programming problem is complete for the class of maximization problems that can be solved exactly in polynomial time.
 This new classification for the problem explains why any highly parallel approximation for linear programming implies $\NC = \P$, a fact known since \oldstylenums{1991}.
 In contrast, not all efficient but inherently sequential problems are inapproximable: there are inherently sequential problems that admit highly parallel constant-factor approximations up to a certain fixed threshold, as well as those that admit ``fully parallel'' approximation schemes.
@@ -188,45 +189,61 @@ In contrast, not all efficient but inherently sequential problems are inapproxim
 %
 % What did the findings mean for the audience?
 %
-Together, these 
+These findings demonstrate a rich hierarchy of optimization problems that are all efficiently solvable, but have various different levels of approximability by highly parallel algorithms.
+Thus, for some problems, when an exact solution is not required, distributed and parallel systems may be utilized to compute an approximate solution, with various approximation ratios.
 % %% Perspective (anyone - what now?)
 %
 % What should be done next?
-
-%% SUMMARY - the ``so what''?
-
+%
+Future work includes developing further strategies for proving approximability and inapproximability using familiar tools from computational complexity theory.
 %% As stated in the previous paragraph, one of our goals is to explore the relationship between optimization problems for which computing an exact solution is an inherently sequential problem and those that permit a highly parallel approximation.
 
-\subsection{Work done}
-
-\subsubsection{Inherently sequential algorithms}
+\subsection{Motivating example: computing free group rank}
 
 Let's first consider a particular example of an inherently sequential problem.
 The free group rank problem is defined as follows: given a finite alphabet $S$, a finite set $U$ of freely reduced words over $S \cup S^{-1}$, and a positive integer $k$, determine the rank of the free subgroup generated by $U$.
-This problem can be solved in polynomial time via an algorithm known as the Nielsen reduction, but can be solved more simply by transforming the set of generators into a graph, then running an algorithm known as Stallings' folding process.
-The free group rank problem is $\P$-complete, so Stallings' folding process is as well.
-For more information, see \autocite{stallings}.
+This problem can be solved in polynomial time via an algorithm known as the Nielsen reduction.
+However, a more efficient solution for this particular problem is to reduce it to a graph problem in which the graph can be interpreted as a generator for all freely reduced words in the subgroup.
+This new problem, which seems to have not been studied before, is then to determine a minimum equivalent graph that generates the same subgroup.
+Though it remains $\P$-complete, the problem can be solved with a simpler and more efficient---but still polyomial-time---algorithm known as Stallings' folding process (which is in turn an inherently sequential algorithm).
 
-\subsubsection{Highly parallel approximations}
+Can this problem of finding a minimum equivalent generating graph be approximated by a highly parallel algorithm?
+To what degree can it be approximated?
+How does it relate to the parallel approximability of other ``minimum equivalent program'' problems?
+We develop the theory necessary to answer these types of questions.
+
+\subsection{Work done}
 
 %% The abundance of models for parallel computation reveal the significance of determining the tradeoff in time and parallelism (see \url{http://cs-people.bu.edu/jeffreyf/#parallel}).
 %% Shared memory models, queuing delays, hierarchical memory access, module-segregated memory all play a part in evaluating the effectiveness of a particular model of parallel computation for a particular application.
 
-Knowing that an optimization problem has no parallelizable exact solution is not wholly satisfying, since we know that some intractable problems have polynomial-time approximation schemes.
-We propose a new theoretical framework for studying efficient and highly parallel approximation algorithms for efficient but inherently sequential optimization problems; for more detailed information, see \autocite{ncapproximation}.
-We propose three new complexity classes, $\NNCO^*$, $\ApxNCO^*$, and $\NCAS^*$.
-The first is the class of optimization problems that admit a polynomial-time algorithm that outputs an optimal solution and whose instance set, solution relation, and measure function are all decidable (or computable, in the last case) by an $\NC$ circuit family.
-The second is the subset of $\NNCO^*$ in which the optimization problem admits an $\NC$-computable constant-factor approximation algorithm.
-The third is the subset of $\ApxNCO^*$ in which the optimization problem admits an $\NC$-computable approximation scheme.
+Knowing that an optimization problem has no parallelizable exact solution is not wholly satisfying without knowing about its approximability.
+For comparison with the more familiar $\NP$ setting, we know that some intractable problems have polynomial-time approximation schemes.
+We therefore propose a new theoretical framework for studying efficient and highly parallel approximation algorithms for efficient but inherently sequential optimization problems. %%; for more detailed information, see \autocite{ncapproximation}.
 
-Using this framework, we can show a hierarchy theorem.
-Below, $\PO$ is the class of optimization problems for which there is a polynomial-time algorithm that outputs an optimal solution, and $\NCO$ is the same but for $\NC$ algorithms.
+We first consider the optimization problems in $\NPO$ whose solution relations are decidable by an $\NC$ circuit family.
+We propose three new complexity classes, $\NNCO$, $\ApxNCO$, and $\NCAS$.
+The first is the subclass of $\NPO$ in which the instance set, solution relation, and measure function of the optimization problem are all decidable (or computable, in the last case) by an $\NC$ circuit family.
+The second is the subset of $\NNCO$ in which the optimization problem admits an $\NC$-computable constant-factor approximation algorithm.
+The third is the subset of $\ApxNCO$ in which the optimization problem admits an $\NC$-computable approximation scheme.
+These are analagous to the standard complexity classes $\NPO$, $\APX$, and $\PTAS$, and as such, these classes are distinct, unless $\NC = \NP$.
 
-\begin{theorem}[{\autocite[Theorem~3.25]{ncapproximation}}]
+\begin{theorem}
+  % In fact, NC \neq P is only required for the last strict inequality; the
+  % rest only require NC \neq NP.
   If $\NC \neq \P$, then
-  \begin{equation*}
-    \NCO \subsetneq \NCAS^* \subsetneq \ApxNCO^* \subsetneq \NNCO^* \subsetneq \PO.
-  \end{equation*}
+  $\NCO \subsetneq \NCAS \subsetneq \ApxNCO \subsetneq \NNCO \subsetneq \NPO$.
+\end{theorem}
+
+Our real interest is in those optimization problems that have exact polynomial time solutions, so we propose three new complexity classes, $\NNCO^*$, $\ApxNCO^*$, and $\NCAS^*$, each of which is the intersection of the appropriate complexity class with $\PO$.
+In other words, $\ApxNCO^*$, for example, is the class of optimization problems for which there is a polynomial-time algorithm that outputs optimal solutions and for which there is a $\NC$-computable constant-factor approximation algorithm.
+Again, these classes are distinct under a common complexity theoretic assumption.
+
+\begin{theorem}  % [{\autocite[Theorem~3.25]{ncapproximation}}]
+  If $\NC \neq \P$, then
+  %\begin{equation*}
+    $\NCO \subsetneq \NCAS^* \subsetneq \ApxNCO^* \subsetneq \NNCO^* \subsetneq \PO$.
+  %\end{equation*}
 \end{theorem}
 
 Now what kind of optimization problems are in these classes?
@@ -238,12 +255,15 @@ The linear programming problem is in $\NNCO^*$, since optimal solutions are comp
 Now we are faced with a dilemma: there is a logarithmic-space approximation-preserving reduction from the maximum double circuit value problem to the linear programming, proving that the linear programming problem is also complete for $\PO$.
 However, this tells us that $\NNCO^*$ is not closed under approximation-preserving reductions---evidence that the complexity of verification and the complexity of approximation are not closely related.
 In other words, there is more work to be done in establishing the complexity classes and reductions that take into account complexity of decision, verification, and approximation.
-\todo{This is a key point; reiterate it later and/or mention it in an introduction.}
+%% \todo{This is a key point; reiterate it later and/or mention it in an introduction.}
 
-Moving down the hierarchy, we would like to provide a complete problem for $\ApxNCO^*$.
+\subsection{Future work}
+\label{sec:fut}
+
+We would like to provide a complete problem for $\ApxNCO^*$, thereby providing an initial problem that has an approximation ratio lower bound in this class.
 In order to do this, we need either (1) an analog of the PCP theorem with $\NC$ verifiers for polynomial time decision problems, or (2) a canonical, ``universal'' complete problem for $\ApxNCO^*$.
 These seem to be the only two known ways for showing completeness in constant-factor approximation classes.
-The first approach is difficult to apply because it is not obvious how to construct a probabilistically checkable proof for a deterministic time complexity class like $\PO$; see \autoref{sec:ncpcp} below and \autocite{ncpcp} for more information on that approach.
+The first approach is difficult to apply because it is not obvious how to construct a probabilistically checkable proof for a deterministic time complexity class like $\PO$; see \autoref{sec:ncpcp} below for more information on that approach.
 The second approach is difficult to apply because although this technique has worked in the past for constructing a complete problem for $\APX$ \autocite[Lemma~2]{cp91}, it is not clear how to guarantee a polynomial time computable function that produces optimal solutions for such a problem.
 
 We propose three candidate complete problems for $\ApxNCO^*$.
@@ -261,24 +281,11 @@ Since we know the linear programming problem is not approximable by a parallel a
   Given a linear program with a certain specific form and an approximation guarantee on the objective function values, find a solution vector that maximizes the objective.
 \end{itemize}
 
-We currently do not know how to prove that any of these is complete for $\ApxNCO^*$.
+%% We currently do not know how to prove that any of these is complete for $\ApxNCO^*$.
 
-\subsection{Future work}
+Future techniques for refining our classification of optimization problems based on their parallelizability include defining fixed-parameter parallelizable problems, defining average-case parallelizable problems, and using a descriptive complexity definition for $\NC$ to construct a syntactic definition of $\ApxNCO$.
 
-\begin{description}[style=nextline]
-\item[Fixed parameter parallelizable problems \autocite{parallel}]
-  Compare with limited nondeterminism classes, as done in \autocite[Section~4.4]{fg06}.
-\item[Average-case parallelizable problems \autocite{parallel}]
-  Create a definition, using either circuits or PRAM.
-\item[Syntactic definition of $\ApxNCO^*$ \autocite{ncapproximation}]
-  We know $\FO[\polylog] = \NC$, can we use this?
-\item[Time-lock puzzles \autocite{timelock}]
-  Understanding parallel approximability and average-case parallelizability of inherently sequential problems can be help to construct time-lock puzzles.
-\item[Relating complexity of decision, verification, and approximation \autocite{limndver}]
-  As mentioned above, we have a tenuous understanding on the relationship among the complexity of decision, the complexity of verification, and the complexity of approximation for all computational problems, and specifically for inherently sequential ones.
-\end{description}
-
-\section{Nondeterminism}
+\section{Limited nondeterminism}
 % Foreword
 
 % context (focus on anyone) why now? - current situation, and why the need is so important
@@ -317,10 +324,9 @@ First, it is defined in such a way that it explicitly has short proof systems wh
 Second, it, like $\P$, lies between $\NC$ and $\NP$.
 
 Our study of $\NNC(\polylog)$ demonstrates that it is interesting in its own right.
-Many properties familiar from the study of nondeterministic polynomial time computation translate directly to $\NNC(\polylog)$, for example, the Valiant--Vazirani theorem \autocite{vv}.
+Many properties familiar from the study of nondeterministic polynomial time computation translate directly to $\NNC(\polylog)$, for example, the Valiant--Vazirani theorem. %% \autocite{vv}.
 It also contains several very natural problems, including the problem of computing the rank of a finite group given as its Cayley table; other algebraic problems can be solved with limited nondeterminism, given such an explicit representation of the algebraic structure.
-Of particular interest are the algebraic common in cryptographic primitives: the discrete logarithm problem, the RSA problem, modular exponentiation, etc.
-We have yet to determine whether these can be computed with limited nondeterminism; see also \autocite{timelock}.
+Of particular interest are the algebraic common in cryptographic primitives: the discrete logarithm problem, the RSA problem, modular exponentiation, etc., though we have yet to determine whether these can be computed with limited nondeterminism. %% ; see also \autocite{timelock}.
 
 Although our original intention was to show a result like $\NNC(\polylog) = \PCP[O(\log \log n), O(1)]$, our research reveals that proving such an equality is equivalent to proving $\NNC(\polylog) = \NC$, or in other words, that a polylogarithmic amount of nondeterminism can be simulated deterministically by an $\NC$ circuit family.
 This should be seen as evidence that such a result is unlikely; in fact, we show that such a simulation implies a deterministic subexponential time algorithm for \textsc{Satisfiability}!
@@ -332,21 +338,23 @@ We are still, however, able to show that certain PCP classes are contained in $\
 %% We can provide a PCP characterization of this complexity class, but we are not quite able to provide inapproximability results (we need to find an optimization problem that meets some requirements, but few potential optimization problems are known).
 %% As part of this avenue of research, we also show that the original PCP Theorem holds even if the verifier is restricted to be an \NC{} machine.
 
-\subsection{Work done}
+\subsection{Motivating example: computing Cayley group rank}
 
-\subsubsection{Limited nondeterminism algorithms}
-
-Let's first consider a particular example of a problem that can be decided with limited nondeterminism, or equivalently, a problem for which any solution is short and verification is efficient.
+Let's first consider a particular example of a problem that can be decided with limited nondeterminism, or equivalently, a problem for which any solution is short and verification is efficient and highly parallel.
 The Cayley group rank problem is defined as follows: given the Cayley table of a group $G$ of order $n$, compute the rank of the group.
 Since finite groups have generating sets of cardinality $\log n$, this problem can be solved by the following simple algorithm: nondeterministically choose a set of at most $\log n$ elements of $G$, check if that set generates the group, and if so, output the cardinality of the set.
 Since each element of a set of cardinality $n$ can be represented with $O(\log n)$ bits, the total number of nondeterministically chosen bits is $O(\log^2 n)$.
 Verifying that a set generates a group can be done with a small circuit, so this problem is in $\NNC(\log^2 n)$.
-For more information, see \autocite{grouprank}.
+In fact, we provide a new and more efficient verification procedure for this particular problem, still using only $O(\log^2 n)$ bits of nondeterminism.
 
-\subsubsection{Probabilistically-checkable proofs}
+Does the succinctness of the certificate in this problem tell us something about the approximability of this problem?
+Can a probabilistically checkable proof system with a highly parallel verifier solve this problem with a very small amount of randomness and few queries to the proof?
+We develop the theory necessary to answer these types of questions.
+
+\subsection{Probabilistically-checkable proofs}
 \label{sec:ncpcp}
 
-We are able to prove that the following inclusion chains are equivalent in the sense that the corresponding complexity classes in the two chains are equal,
+We prove that the following inclusion chains are equivalent in the sense that the corresponding complexity classes in the two chains are equal,
 \begin{equation*}
   \NC \subseteq \NNC(\polylog) \subseteq \NP
 \end{equation*}
@@ -386,47 +394,11 @@ If $\polyL \subsetneq \P$, then $\L \subsetneq \L^2 \subsetneq \dotsb \subsetneq
 
 \subsection{Future work}
 
-\begin{description}[style=nextline]
-\item[Reductions respecting verification complexity \autocite{limndver}]
-  As mentioned in previous sections, the complexity of deciding a problem, verifying a solution to the problem, and approximating a problem have no relationship in general.
-  We would like to propose a framework for reductions that respect all three complexities, and specifically apply these to complexity classes involving limited nondeterminism.
-\item[Cryptographic primitives in limited nondeterminism \autocite{timelock}]
-  Which problems common in cryptography can be solved with limited nondeterminism.
-\end{description}
-
-%% \section{Algebraic computation}
-
-%% \subsection{Work done}
-
-%% \begin{itemize}
-%% \item INCLUDED IN LIMND ABOVE: Computing rank of finite algebraic structures with limited nondeterminism
-%% \item INCLUDED IN PARSEQ ABOVE: Stallings' folding process is inherently sequential
-%% \item MENTION BUT DON'T INCLUDE: Time-lock puzzles
-%% \item SHOULD THIS BE INCLUDED? Polynomial-time kernel reductions
-%% \item MENTION THIS AS A RELATED PROBLEM: Finding a maximum linearly dependent set of vectors
-%% \end{itemize}
-
-%% \subsection{Future work}
-
-%% ...
+As we stated in \autoref{sec:fut}, we would like to provide a complete problem for $\ApxNCO^*$ by using a PCP characterization of $\P$.
+We have only provided a PCP characterization of $\NNC(\polylog)$, but we may still be able to use that to construct a problem complete for the class of optimization problems with optimal solutions computable in $\NNC(\polylog)$, but with $\NC$-computable constant-factor approximations.
+As we have shown natural problems in $\NNC(\polylog)$, this would still be of interest, and a start toward showing the same for $\ApxNCO^*$.
 
 %% Print the bibliography section here.
 \printbibliography
-
-%% \appendix
-
-%% \section{General computational complexity}
-
-%% \subsection{Work done}
-
-%% \begin{itemize}
-%% \item (ling) Complexity of parsing closed formulas
-%% \item (cc) Lower bounds for witness-finding algorithms
-%% \item (cc) Graph matching review
-%% \end{itemize}
-
-%% \subsection{Future work}
-
-%% ...
 
 \end{document}
