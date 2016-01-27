@@ -123,23 +123,24 @@
 Since parallel computing is again becoming a topic of interest in computer science, it is important to revisit the theoretical foundations of highly parallel computing.
 % need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
 ``Inherently sequential'' computational problems see no significant speedup when run on highly parallel computers.
-Just as there are efficient approximations for intractable optimization problems, so too are there highly parallel approximations for inherently sequential optimization problems.
+Just as there are efficient approximations for intractable optimization problems, so too are there efficient and highly parallel approximations for optimization problems that are tractable but inherently sequential.
+(From here forward, we write ``parallel'' instead of ``efficient and highly parallel'' and ``sequential'' instead of ``inherently sequential''\kern-0.5em.\kern0.25em)
 %%% relevant existing work, given as part of the need
-For example, the problem of computing the optimal vector in a positive linear program, a problem relevant to distributed flow control within a network of routers, is inherently sequential, but a vector very close to the optimal one can be computed quickly by a highly parallel computer.
+For example, the problem of computing the optimal vector in a positive linear program, a problem relevant to distributed flow control within a network of routers, is sequential, but a vector very close to the optimal one can be computed quickly in parallel.
 % task (focus on author) why me? - what was undertaken to address the need
-We intend to develop the theory of structural complexity for efficient and highly parallel approximations for tractable but inherently sequential problems.
-This area has not been well-studied, and when it has been studied, the results focus mostly on highly parallel approximations for intractable optimization problems (that is, $\NC$ approximations for $\NP$-complete problems), not highly parallel approximations for tractable but inherently sequential problems (that is, $\NC$ approximations for $\P$-complete problems).
+We intend to develop the theory of structural complexity for parallel approximations for tractable sequential problems.
+This area has not been well-studied, and when it has been studied, the results focus mostly on parallel approximations for intractable optimization problems (that is, $\NC$ approximations for $\NP$-complete problems), not parallel approximations for tractable sequential problems (that is, $\NC$ approximations for $\P$-complete problems).
 % object (focus on document) why this document - what the document covers
 This prospectus describes work we have already completed and work that remains in developing this theory.
 
 % Summary
 %
 % findings (focus on author) what? - what the work revealed when performing the task
-The two sections below discuss two main approaches to proving the limitations of highly parallel approximations for inherently sequential problems.
-The first section discusses the complexity classes associated with highly parallel approximation algorithms, the second discusses augmenting a highly parallel algorithm with a small amount of nondeterminism as a technique to prove approximability or inapproximability of inherently sequential problems.
+The two sections below discuss two main approaches to proving the limitations of parallel approximations for sequential problems.
+The first section discusses the complexity classes associated with parallel approximation algorithms, the second discusses augmenting a parallel algorithm with a small amount of nondeterminism as a technique to prove approximability or inapproximability of sequential problems.
 Both concern inapproximability by $\NC$ algorithms, but the former considers $\P$ optimization problems while the latter considers $\NNC(\polylog)$ problems.
 % conclusion (focus on readers) so what? - what the findings mean for the audience
-Together, these form the basis for proving approximability and inapproximability for tractable but inherently sequential problems by highly parallel algorithms.
+Together, these form the basis for proving approximability and inapproximability for tractable sequential problems by parallel algorithms.
 % perspective (focus on anyone) what now? - what should be done next
 This line of research, along with the fact that the complexity of solving a computational problem exactly seems to have little to with the approximability of that problem, emphasizes the need to further determine the relative difficulty of computational problems with respect to the complexity of decision, verification, and approximation.
 
@@ -152,25 +153,25 @@ This line of research, along with the fact that the complexity of solving a comp
 % What is the current situation, and why is the need so important?
 %
 The $\NP$-complete problems are intractable, whereas problems in $\P$ are tractable.
-Similarly, the $\P$-complete problems are tractable but inherently sequential, whereas problems in $\NC$ are both tractable and parallelizable.
+Similarly, the $\P$-complete problems are tractable but sequential, whereas problems in $\NC$ are both tractable and parallelizable.
 % %% Need (readers - why you?) %%
 %
 % Why is this relevant to the reader, and why does something need to be done?
 % (Also reference relevant existing work.)
 %
-The theory of approximability of intractable problems does not provide any guarantees on parallelizability, and ignores the approximability of tractable but inherently sequential problems by highly parallel approximation algorithms.
+The theory of approximability of intractable problems does not provide any guarantees on parallelizability, and ignores the approximability of tractable sequential problems by parallel algorithms.
 As parallel and distributed systems become more widespread, parallelizability of programs becomes more valuable.
 An important and widely used tractable optimization problem is the linear programming problem, which is solvable in polynomial time, but has no $\NC$ approximation algorithm unless $\NC = \P$.
 % %% Task (author - why me?) %%
 %
 % What was undertaken to address the need?
 %
-We propose translating the theory of polynomial-time approximation algorithms for $\NP$-complete optimization problems to the setting of highly parallel approximation algorithms for $\P$-complete optimization problems in order to classify and explain approximability and inapproximability by highly parallel algorithms for important problems like linear programming.
+We propose translating the theory of polynomial-time approximations for $\NP$-complete optimization problems to the setting of parallel approximations for $\P$-complete optimization problems in order to classify and explain (in-)approximability by parallel algorithms for important problems like linear programming.
 % %% Object (document - why this document?) %%
 %
 % What does this document cover?
 %
-This section defines new complexity classes for optimization problems that are solvable exactly in polynomial time and approximable to various degrees by highly parallel algorithms, then proposes using these classifications to provide provable guarantees on approximability or inapproximability.
+This section defines new complexity classes for optimization problems that are solvable exactly in polynomial time and approximable to various degrees by parallel algorithms, then proposes using these classifications to provide provable guarantees on (in-)approximability.
 
 % % Summary %
 %
@@ -179,36 +180,36 @@ This section defines new complexity classes for optimization problems that are s
 % What did the work reveal when performing the task?
 %
 First, we show that for optimization problems, the complexity of the verification procedure matters.
-Specifically, for some problems, verifying a solution is an inherently sequential problem, whereas for others, verification can be done in parallel.
+Specifically, for some problems, verifying a solution is a sequential problem, whereas for others, verification can be done in parallel.
 This allows us to define a hierarchy of complexity classes between $\NCO$ and $\NPO$ consisting of optimization problems that can be approximated in parallel.
 We show that this hierarchy (as well as the one resulting from its intersection with $\PO$) is likely strict.
 Second, we prove that the linear programming problem is complete for the class of maximization problems that can be solved exactly in polynomial time.
-This new classification for the problem explains why any highly parallel approximation for linear programming implies $\NC = \P$, a fact known since \oldstylenums{1991}.
-In contrast, not all efficient but inherently sequential problems are inapproximable: there are inherently sequential problems that admit highly parallel constant-factor approximations up to a certain fixed threshold, as well as those that admit ``fully parallel'' approximation schemes.
+This new classification for the problem explains why any parallel approximation for linear programming implies $\NC = \P$, a fact known since \oldstylenums{1991}.
+In contrast, not all tractable sequential problems are inapproximable: there are sequential problems that admit parallel constant-factor approximations up to a certain fixed threshold, as well as those that admit ``fully parallel'' approximation schemes.
 
 % %% Conclusion (readers - so what?)
 %
 % What did the findings mean for the audience?
 %
-These findings demonstrate a rich hierarchy of optimization problems that are all efficiently solvable, but have various different levels of approximability by highly parallel algorithms.
+These findings demonstrate a rich hierarchy of optimization problems that are all efficiently solvable, but have various different levels of approximability by parallel algorithms.
 Thus, for some problems, when an exact solution is not required, distributed and parallel systems may be utilized to compute an approximate solution, with various approximation ratios.
 % %% Perspective (anyone - what now?)
 %
 % What should be done next?
 %
 Future work includes developing further strategies for proving approximability and inapproximability using familiar tools from computational complexity theory.
-%% As stated in the previous paragraph, one of our goals is to explore the relationship between optimization problems for which computing an exact solution is an inherently sequential problem and those that permit a highly parallel approximation.
+%% As stated in the previous paragraph, one of our goals is to explore the relationship between optimization problems for which computing an exact solution is a sequential problem and those that permit a parallel approximation.
 
 \subsection{Motivating example: computing free group rank}
 
-Let's first consider a particular example of an inherently sequential problem.
+Let's first consider a particular example of a sequential problem.
 The free group rank problem is defined as follows: given a finite alphabet $S$ and a finite set $U$ of freely reduced words over $S$, determine the rank of the free subgroup generated by $U$.
 This problem can be solved in polynomial time via an algorithm known as the Nielsen reduction.
 However, a more efficient solution for this particular problem is to reduce it to a graph problem in which the graph can be interpreted as a generator for all freely reduced words in the subgroup.
 This new problem, which seems to have not been studied before, is then to determine a minimum equivalent graph that generates the same subgroup.
-Though it remains $\P$-complete, the problem can be solved with a simpler and more efficient---but still polyomial-time---algorithm known as Stallings' folding process (which is in turn an inherently sequential algorithm).
+Though it remains $\P$-complete, the problem can be solved with a simpler and more efficient---but still polyomial-time---algorithm known as Stallings' folding process (which is in turn a sequential algorithm).
 
-Can this problem of finding a minimum equivalent generating graph be approximated by a highly parallel algorithm?
+Can this problem of finding a minimum equivalent generating graph be approximated by a parallel algorithm?
 To what degree can it be approximated?
 How does it relate to the parallel approximability of other ``minimum equivalent program'' problems?
 We develop the theory necessary to answer these types of questions.
@@ -220,7 +221,7 @@ We develop the theory necessary to answer these types of questions.
 
 Knowing that an optimization problem has no parallelizable exact solution is not wholly satisfying without knowing about its approximability.
 For comparison with the more familiar $\NP$ setting, we know that some intractable problems have polynomial-time approximation schemes.
-We therefore propose a new theoretical framework for studying efficient and highly parallel approximation algorithms for efficient but inherently sequential optimization problems. %%; for more detailed information, see \autocite{ncapproximation}.
+We therefore propose a new theoretical framework for studying parallel approximations for tractable sequential optimization problems. %%; for more detailed information, see \autocite{ncapproximation}.
 
 We first consider the optimization problems in $\NPO$ whose solution relations are decidable by an $\NC$ circuit family.
 We propose three new complexity classes, $\NNCO$, $\ApxNCO$, and $\NCAS$.
@@ -308,7 +309,7 @@ Future techniques for refining our classification of optimization problems based
 
 % perspective (focus on anyone) what now? - what should be done next
 
-As stated in the previous section, we would like to show that some problems are hard to approximate on parallel machines, and one way of doing that involves using an analog of the PCP Theorem, adapted for highly parallel verifiers.
+As stated in the previous section, we would like to show that some problems are hard to approximate on parallel machines, and one way of doing that involves using an analog of the PCP Theorem, adapted for parallel verifiers.
 Unfortunately, the techniques used to prove the original PCP Theorem rely on the fact that $\NP$ can be interpreted as the class of languages for which there is an efficient verification procedure given a brief witness to language membership; no such obvious interpretation of $\P$ exists.
 Indeed, this question was already on the minds of researchers soon after the original proof of the PCP Theorem.
 \blockquote[{\autocite{trevisan98}}]{
@@ -334,14 +335,14 @@ This should be seen as evidence that such a result is unlikely; in fact, we show
 We are still, however, able to show that certain PCP classes are contained in $\NNC(\polylog)$.
 %% One strategy that failed to be fruitful was using tradeoffs in size, depth, and alternation in circuits to prove lower bounds for problems decidable with limited nondeterminism \autocite{sizedepth}.
 
-%% Third, we attempt to produce a probabilistically checkable proof characterization for \P{} in order to yield inapproximability results (in the sense of ``no approximation by highly parallel computer'') similar to those from the realm of \P{} and \NP.
-%% Since there is no obvious characterization of \P{} as a proof system, we use the nearby (but probably incomparable) complexity class of languages decidable by a highly parallel machine augmented with a polylogarithmic amount of nondeterministic bits.
+%% Third, we attempt to produce a probabilistically checkable proof characterization for \P{} in order to yield inapproximability results (in the sense of ``no approximation by parallel computer'') similar to those from the realm of \P{} and \NP.
+%% Since there is no obvious characterization of \P{} as a proof system, we use the nearby (but probably incomparable) complexity class of languages decidable by a parallel machine augmented with a polylogarithmic amount of nondeterministic bits.
 %% We can provide a PCP characterization of this complexity class, but we are not quite able to provide inapproximability results (we need to find an optimization problem that meets some requirements, but few potential optimization problems are known).
 %% As part of this avenue of research, we also show that the original PCP Theorem holds even if the verifier is restricted to be an \NC{} machine.
 
 \subsection{Motivating example: computing Cayley group rank}
 
-Let's first consider a particular example of a problem that can be decided with limited nondeterminism, or equivalently, a problem for which any solution is short and verification is efficient and highly parallel.
+Let's first consider a particular example of a problem that can be decided with limited nondeterminism, or equivalently, a problem for which any solution is short and verification is parallelizable.
 The Cayley group rank problem is defined as follows: given the Cayley table of a group $G$ of order $n$, compute the rank of the group.
 Since finite groups have generating sets of cardinality $\log n$, this problem can be solved by the following simple algorithm: nondeterministically choose a set of at most $\log n$ elements of $G$, check if that set generates the group, and if so, output the cardinality of the set.
 Since each element of a set of cardinality $n$ can be represented with $O(\log n)$ bits, the total number of nondeterministically chosen bits is $O(\log^2 n)$.
@@ -349,7 +350,7 @@ Verifying that a set generates a group can be done with a small circuit, so this
 In fact, we provide a new and more efficient verification procedure for this particular problem, still using only $O(\log^2 n)$ bits of nondeterminism.
 
 Does the succinctness of the certificate in this problem tell us something about the approximability of this problem?
-Can a probabilistically checkable proof system with a highly parallel verifier solve this problem with a very small amount of randomness and few queries to the proof?
+Can a probabilistically checkable proof system with a parallel verifier solve this problem with a very small amount of randomness and few queries to the proof?
 We develop the theory necessary to answer these types of questions.
 
 \subsection{Probabilistically-checkable proofs}
