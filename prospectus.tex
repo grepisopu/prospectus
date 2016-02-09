@@ -83,7 +83,7 @@
 \SetWatermarkFontSize{3.5cm}
 
 %% Set the title and author of the PDF file.
-\hypersetup{pdftitle={Parallelism with nondeterminism}, pdfauthor={Jeffrey Finkelstein}}
+\hypersetup{pdftitle={Parallelism with limited nondeterminism}, pdfauthor={Jeffrey Finkelstein}}
 
 %% Declare the bibliography file.
 \addbibresource{prospectus.bib}
@@ -366,7 +366,7 @@ and
 \end{equation*}
 where the PCP verifier is an $\NC$ machine.
 This equivalence allows us to show that certain tradeoffs in the two PCP parameters are unlikely.
-\begin{theorem}[{\autocite[Corollary~3.6]{ncpcp}}]
+\begin{theorem}  %[{\autocite[Corollary~3.6]{ncpcp}}]
   \mbox{}
   \begin{enumerate}
   \item If $\PCP^\NC[O(\log \log n), O(1)] = \PCP^\NC[O(\log \log n), \polylog]$, then $\NP \subseteq \SUBEXP$.
